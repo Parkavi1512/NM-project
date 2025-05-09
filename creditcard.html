@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Fraud Detection System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            background-color: #333;
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #fdbb2d;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #fdbb2d;
+            color: #333;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #1a2a6c;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1a2a6c;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #b21f1f;
+        }
+        
+        .how-it-works {
+            background-color: #1a2a6c;
+            color: white;
+            padding: 5rem 0;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            margin: 1rem;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #fdbb2d;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        .demo {
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .demo-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Advanced Credit Card Fraud Detection</h1>
+            <p>Protecting your transactions with cutting-edge AI technology</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Real-time Fraud Detection for Secure Transactions</h1>
+            <p>Our AI-powered system analyzes thousands of data points to detect and prevent fraudulent credit card transactions instantly.</p>
+            <a href="#demo" class="btn">Try Our Demo</a>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Real-time Analysis</h3>
+                    <p>Our system evaluates transactions in milliseconds, providing instant fraud detection without slowing down your checkout process.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Machine Learning</h3>
+                    <p>Continuously improving AI algorithms learn from new fraud patterns to stay ahead of sophisticated scams.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Multi-layered Security</h3>
+                    <p>We combine behavioral analysis, location tracking, and spending patterns for comprehensive protection.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Customizable Rules</h3>
+                    <p>Tailor the fraud detection parameters to match your business needs and risk tolerance.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Detailed Reporting</h3>
+                    <p>Access comprehensive reports to understand fraud attempts and improve your security measures.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>24/7 Monitoring</h3>
+                    <p>Round-the-clock surveillance of all transactions to catch fraud at any time of day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How Our Fraud Detection Works</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Transaction Initiation</h3>
+                    <p>A customer makes a purchase using their credit card through your payment system.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Data Collection</h3>
+                    <p>Our system gathers hundreds of data points about the transaction, device, and user behavior.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>AI Analysis</h3>
+                    <p>Machine learning models evaluate the transaction against known fraud patterns and anomalies.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Risk Assessment</h3>
+                    <p>The system calculates a fraud probability score and recommends action in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Try Our Fraud Detection Demo</h2>
+            </div>
+            <div class="demo-form">
+                <form id="fraud-detection-form">
+                    <div class="form-group">
+                        <label for="card-number">Credit Card Number</label>
+                        <input type="text" id="card-number" placeholder="Enter a test credit card number">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Transaction Amount ($)</label>
+                        <input type="number" id="amount" placeholder="Enter transaction amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Transaction Location</label>
+                        <input type="text" id="location" placeholder="Enter transaction location">
+                    </div>
+                    <div class="form-group">
+                        <label for="merchant">Merchant Category</label>
+                        <select id="merchant">
+                            <option value="retail">Retail</option>
+                            <option value="travel">Travel</option>
+                            <option value="digital">Digital Goods</option>
+                            <option value="services">Services</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Analyze Transaction</button>
+                </form>
+                <div id="result" style="margin-top: 2rem; display: none;">
+                    <h3>Fraud Detection Result</h3>
+                    <p id="result-text"></p>
+                    <p id="confidence-level"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <h3>Credit Card Fraud Detection System</h3>
+            <p>Contact us: info@frauddetection.com | +1 (555) 123-4567</p>
+            <p>&copy; 2023 Fraud Detection Technologies. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('fraud-detection-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate fraud detection analysis
+            const cardNumber = document.getElementById('card-number').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const location = document.getElementById('location').value;
+            const merchant = document.getElementById('merchant').value;
+            
+            // Simple mock detection logic
+            let isFraudulent = false;
+            let confidence = Math.random() * 100;
+            let reasons = [];
+            
+            // Check for test credit card numbers
+            if (cardNumber.startsWith('4111') || cardNumber.startsWith('5105')) {
+                confidence += 20;
+                reasons.push("Test card number pattern detected");
+            }
+            
+            // High amount transactions
+            if (amount > 1000) {
+                confidence += 15;
+                reasons.push("Unusually high transaction amount");
+            }
+            
+            // International transactions
+            if (location.toLowerCase().includes('international') || 
+                location.toLowerCase().includes('foreign')) {
+                confidence += 10;
+                reasons.push("International transaction location");
+            }
+            
+            // Digital goods often targeted
+            if (merchant === 'digital') {
+                confidence += 5;
+                reasons.push("High-risk merchant category");
+            }
+            
+            // Cap confidence at 99%
+            confidence = Math.min(confidence, 99);
+            
+            // Randomize a bit
+            confidence = Math.round(confidence * 10) / 10;
+            
+            // Determine if fraudulent based on confidence
+            isFraudulent = confidence > 65;
+            
+            // Display results
+            const resultText = document.getElementById('result-text');
+            const confidenceLevel = document.getElementById('confidence-level');
+            const resultDiv = document.getElementById('result');
+            
+            if (isFraudulent) {
+                resultText.textContent = "🚨 Potential Fraud Detected! Reasons: " + reasons.join(", ");
+                resultText.style.color = "#b21f1f";
+            } else {
+                resultText.textContent = "✅ Transaction appears legitimate.";
+                resultText.style.color = "#1a2a6c";
+            }
+            
+            confidenceLevel.textContent = `Confidence Level: ${confidence}%`;
+            confidenceLevel.style.fontWeight = "bold";
+            
+            resultDiv.style.display = "block";
+        });
+    </script>
+</body>
+</html>
